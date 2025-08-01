@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Messages;
 
-public class RandomPersonTextureBehaviour : MonoBehaviour, Messages.IOnAfterDeserialise
+public class RandomPersonTextureBehaviour : MonoBehaviour, IOnAfterDeserialise
 {
     [SkipSerialisation]
     public bool PickRandomOnStart = true;
@@ -18,8 +19,7 @@ public class RandomPersonTextureBehaviour : MonoBehaviour, Messages.IOnAfterDese
     private Sprite[] _originalLimbSprites;
     private bool _deserialized;
 
-    public void OnAfterDeserialise(List<GameObject> gameObjects)
-        => _deserialized = true;
+    public void OnAfterDeserialise(List<GameObject> gameObjects) => _deserialized = true;
     private void Start()
     {
         _person = GetComponent<PersonBehaviour>();
@@ -71,7 +71,7 @@ public class RandomPersonTextureBehaviour : MonoBehaviour, Messages.IOnAfterDese
     }
     private void SetTexturesByIndex()
     {
-        if (Skins.Length == 0)
+        if (Skins.Length is 0)
             return;
 
         var skin = Skins[ChosenIndex];
@@ -102,7 +102,7 @@ public class RandomPersonTextureChildBehaviour : MonoBehaviour
         var renderer = GetComponent<SpriteRenderer>();
         var randomTextures = GetComponentInParent<RandomPersonTextureBehaviour>();
 
-        if (randomTextures.OnAfterChange == null)
+        if (randomTextures.OnAfterChange is null)
             randomTextures.OnAfterChange = new UnityEvent();
         randomTextures.OnAfterChange.AddListener(() => renderer.sprite = Sprites[randomTextures.ChosenIndex]);
     }
