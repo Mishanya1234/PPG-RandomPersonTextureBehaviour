@@ -8,7 +8,7 @@ public class RandomPersonTextureBehaviour : MonoBehaviour, IOnAfterDeserialise
 {
     [SkipSerialisation]
     public bool PickRandomOnStart = true;
-    public Texture2D[] Skins = Array.Empty<Texture2D>();
+    public Texture2D[] Skins = [];
     public Texture2D Flesh;
     public Texture2D Bone;
     [SkipSerialisation]
@@ -24,11 +24,11 @@ public class RandomPersonTextureBehaviour : MonoBehaviour, IOnAfterDeserialise
     {
         _person = GetComponent<PersonBehaviour>();
 
-        var nextTextureButton = new ContextMenuButton("nextSkin", "Next texture", "Switches to the next texture", NextTexture)
+        ContextMenuButton nextTextureButton = new("nextSkin", "Next texture", "Switches to the next texture", NextTexture)
         {
             LabelWhenMultipleAreSelected = "Next texture"
         };
-        var previousTextureButton = new ContextMenuButton("previousSkin", "Previous texture", "Switches to the previous texture", PreviousTexture)
+        ContextMenuButton previousTextureButton = new("previousSkin", "Previous texture", "Switches to the previous texture", PreviousTexture)
         {
             LabelWhenMultipleAreSelected = "Previous texture"
         };
@@ -103,7 +103,8 @@ public class RandomPersonTextureChildBehaviour : MonoBehaviour
         var randomTextures = GetComponentInParent<RandomPersonTextureBehaviour>();
 
         if (randomTextures.OnAfterChange is null)
-            randomTextures.OnAfterChange = new UnityEvent();
+            randomTextures.OnAfterChange = new();
         randomTextures.OnAfterChange.AddListener(() => renderer.sprite = Sprites[randomTextures.ChosenIndex]);
     }
 }
+
